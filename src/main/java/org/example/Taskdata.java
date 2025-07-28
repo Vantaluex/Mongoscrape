@@ -64,11 +64,7 @@ public class Taskdata {
                 System.out.println("Problem Statement: " + problemStatement);
                 System.out.println("---");
                 Mongo.insert(relativeurl, title, points, problemStatement);
-                try {
-                    Thread.sleep(100); // Wait 0.5 second between each contest
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+                Sleeper.timeout(100);
             } catch (IOException e) {
                 System.out.println("Error fetching task page: " + e.getMessage());
             }

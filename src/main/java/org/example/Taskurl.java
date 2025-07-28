@@ -18,30 +18,19 @@ public class Taskurl {
                 if (e.getStatusCode() == 429 || e.getStatusCode() == 403) {
                     retryCount++;
                     System.out.println("Rate limited (429). Waiting 5 seconds before retry " + retryCount + "/" + maxRetries);
-                    try {
-                        Thread.sleep(5000); // Wait 5 seconds
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
+                    Sleeper.timeout(5000);
                 }
                 if (retryCount >= maxRetries) {
                     System.out.println("Max retries reached for: " + url);
                     continue; // Skip to next contest
                 }
-
             } catch (java.io.IOException e) { // Add this catch block
                 System.out.println("IO error: " + e.getMessage());
                 retryCount++;
                 if (retryCount >= maxRetries) {
                     break;
                 }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    break;
-                }
+                Sleeper.timeout(5000);
             }
         }
         if (contestdocument == null) {
